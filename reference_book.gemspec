@@ -6,11 +6,10 @@ require 'reference_book/version'
 Gem::Specification.new do |spec|
   spec.name          = "reference_book"
   spec.version       = ReferenceBook::VERSION
-  spec.authors       = ["tom"]
-  spec.email         = ["tommaso@pavese.me"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
+  spec.author        = "Tommaso Pavese"
+  spec.summary       = "%q{TODO: Write a short summary. Required.}"
   spec.description   = %q{TODO: Write a longer description. Optional.}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/tompave/reference_book"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
@@ -19,5 +18,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler", "~> 1.6"
-  spec.add_development_dependency "rake"
+  spec.add_development_dependency "rake", '~> 10.0'
+
+  spec.add_development_dependency 'minitest', '~> 5.3'
 end

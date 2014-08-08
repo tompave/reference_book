@@ -20,3 +20,8 @@ tmp
 *.o
 *.a
 mkmf.log
+
+# OSX
+.Spotlight-V100
+.DS_Store
+.Trashes
