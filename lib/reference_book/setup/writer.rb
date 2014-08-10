@@ -53,11 +53,16 @@ private
 
 
   def sanitize_title_and_key(raw_title, raw_library_key)
-    raw_title       ||= "Default"
-    raw_library_key ||= raw_title
+    raw_title ||= "Default"
+    book_title = ReferenceBook::Inflector.constantize(raw_title)
 
-    book_title    = ReferenceBook::Inflector.make_title(raw_title)
-    library_key   = ReferenceBook::Inflector.make_key(raw_library_key)
+    # If we have an explicit key, we just ensure it's a symbol,
+    # if we don't have an explicit key, we adapt the title
+    if raw_library_key
+      library_key = raw_library_key.to_sym
+    else
+      library_key = ReferenceBook::Inflector.make_key(raw_title)
+    end
 
     [book_title, library_key]
   end
