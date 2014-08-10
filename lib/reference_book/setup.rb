@@ -1,0 +1,2 @@
+module ReferenceBook::Setup
+end
