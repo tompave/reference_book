@@ -51,4 +51,20 @@ class BookTest < Minitest::Test
     @book.foo = 9876
     assert_equal 9876, @book[:foo]
   end
+
+
+  def test_creation
+    template = ReferenceBook::Book.new("Foobar", :foo, :bar)
+    assert_equal Class, template.class
+    assert_equal "ReferenceBook::Book::Foobar", template.name
+
+    book = template.new
+    assert book.is_a?(ReferenceBook::Book)
+    assert_equal "ReferenceBook::Book::Foobar", book.class.name
+
+    refute_equal book, @book
+    assert_equal book, template.new
+  end
+
+
 end
