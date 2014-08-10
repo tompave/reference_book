@@ -1,6 +1,6 @@
 module ReferenceBook::Library
   class << self
-    
+
     def store(book)
       verify_library_key!(book.library_key)
 
@@ -21,9 +21,16 @@ module ReferenceBook::Library
     end
 
 
-
     def [](key)
       shelf[key]
+    end
+
+
+    def empty!
+      index.each { |key| remove_accessor_for(key) }
+      @index = []
+      @shelf = {}
+      nil
     end
 
 
@@ -33,12 +40,19 @@ module ReferenceBook::Library
       end
     end
 
+
+
   private
 
     def define_accessor_for(book)
       self.define_singleton_method book.library_key do
         self.shelf[book.library_key]
       end
+    end
+
+
+    def remove_accessor_for(key)
+      self.singleton_class.send :remove_method, key
     end
 
 

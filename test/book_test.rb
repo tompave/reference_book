@@ -5,6 +5,7 @@ class BookTest < Minitest::Test
   BOOK_STRUCT = ReferenceBook::Book.new("Example", :foo, :bar)
 
   def setup
+    super
     @book = BOOK_STRUCT.new
   end
 
