@@ -3,6 +3,12 @@ require 'test_helper'
 class LibraryTest < Minitest::Test
 
 
+  def setup
+    super
+    ReferenceBook::Library.empty!
+  end
+
+
   def teardown
     super
     ReferenceBook::Library.empty!
@@ -110,7 +116,7 @@ class LibraryTest < Minitest::Test
 
 private
   
-  BOOK_STRUCT = ReferenceBook::Book.new("Example", :title, :library_key)
+  BOOK_STRUCT = ReferenceBook::Book.new("ExampleLib", :title, :library_key)
 
   def make_book(key)
     book = BOOK_STRUCT.new

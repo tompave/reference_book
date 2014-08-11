@@ -21,7 +21,7 @@ class InflectorTest < Minitest::Test
 
 
   def test_constantize_other_chars
-    result = ReferenceBook::Inflector.constantize "hello-world!"
+    result = ReferenceBook::Inflector.constantize "hello-world!11"
     assert_equal "Helloworld", result
   end
 
