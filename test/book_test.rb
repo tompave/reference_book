@@ -69,4 +69,19 @@ class BookTest < Minitest::Test
   end
 
 
+
+  def test_to_h
+    assert_equal Hash, @book.to_h.class
+    assert_equal 2, @book.to_h.size
+    assert_includes @book.to_h.keys, :foo
+    assert_includes @book.to_h.keys, :bar
+    assert_nil @book.to_h[:foo]
+    assert_nil @book.to_h[:bar]
+
+    @book.foo = 11
+    @book.bar = 22
+    assert_equal 11, @book.to_h[:foo]
+    assert_equal 22, @book.to_h[:bar]
+  end
+
 end
