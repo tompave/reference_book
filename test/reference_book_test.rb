@@ -2,11 +2,6 @@ require 'test_helper'
 
 class ReferenceBookTest < Minitest::Test
 
-  # def setup
-  #   super
-  #   ReferenceBook::Library.empty!
-  # end
-
 
   def teardown
     super
@@ -68,50 +63,126 @@ class ReferenceBookTest < Minitest::Test
 
   
 
+
   def test_write_more_than_one_book
+    assert_empty ReferenceBook::Library.index
+    assert_empty ReferenceBook::Library.shelf
+
+    ReferenceBook.write_book(title: "RefBookA") do |b|
+      b.foo = 111
+      b.bar = 222
+    end
+
+    assert_equal 1, ReferenceBook::Library.index.size
+    assert_equal 1, ReferenceBook::Library.shelf.size
+
+    ReferenceBook.write_book(title: "RefBookB") do |b|
+      b.foo = 111
+      b.bar = 222
+    end
+
+    assert_equal 2, ReferenceBook::Library.index.size
+    assert_equal 2, ReferenceBook::Library.shelf.size
   end
+
 
 
 
 
   def test_attributes_of_created_book
+    book = ReferenceBook.write_book(title: "RefBookC") do |b|
+      b.foo = 111
+      b.bar = 222
+      b.baz = 333
+    end
+
+    assert_equal 111, book.foo
+    assert_equal 222, book.bar
+    assert_equal 333, book.baz
   end
 
-
-
-  def test_create_book_without_title
-  end
-
-  
-  def test_create_book_without_explicit_key
-  end
 
 
 
   def test_write_book_duplicated_key
+    book = ReferenceBook.write_book(title: "Hello", library_key: :existing) do |b|
+      b.foo = 'hello'
+    end
 
+    assert book.is_a?(ReferenceBook::Book)
+    assert_equal 1, ReferenceBook::Library.index.size
+
+    assert_raises ReferenceBook::BookDefinitionError do
+      ReferenceBook.write_book(title: "HelloA", library_key: :existing) do |b|
+        b.foo = 'hello'
+      end
+    end
+
+
+    book = ReferenceBook.write_book(title: "HelloB", library_key: :another) do |b|
+      b.foo = 'hello'
+    end
+
+    assert book.is_a?(ReferenceBook::Book)
+    assert_equal 2, ReferenceBook::Library.index.size
   end
 
 
 
   def test_create_book_with_spec_pass
+    ReferenceBook.define_book_structure :one, :two, :three
+
+    book = ReferenceBook.write_book(title: "aaaa") do |b|
+      b.one = 1
+      b.two = 2
+      b.three = 3
+    end
+
+    assert book.is_a?(ReferenceBook::Book)
+    assert_equal 1, ReferenceBook::Library.index.size
   end
 
 
 
   def test_create_book_with_spec_fail_missing
+    ReferenceBook.define_book_structure :one, :two, :three
+
+    assert_raises ReferenceBook::BookDefinitionError do
+      ReferenceBook.write_book(title: "bbbb") do |b|
+        b.one = 1
+        b.two = 2
+      end
+    end
   end
 
 
   def test_create_book_with_spec_fail_unexpected
+    ReferenceBook.define_book_structure :one, :two, :three
+
+    assert_raises ReferenceBook::BookDefinitionError do
+      ReferenceBook.write_book(title: "cccc") do |b|
+        b.one = 1
+        b.two = 2
+        b.three = 3
+        b.four = 4
+      end
+    end
   end
 
 
   def test_create_book_with_spec_fail_missing_and_unexpected
+    ReferenceBook.define_book_structure :one, :two, :three
+
+    assert_raises ReferenceBook::BookDefinitionError do
+      ReferenceBook.write_book(title: "dddd") do |b|
+        b.one = 1
+        b.four = 4
+      end
+    end
   end
 
 
-  
+
 
   def test_library
     assert_equal ReferenceBook::Library, ReferenceBook.library
