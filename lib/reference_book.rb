@@ -27,7 +27,6 @@ module ReferenceBook
 
 
 
-
     # with block with 1 argument
     #
     # ReferenceBook.write_book(title: :sym_or_str) do |book|
@@ -45,18 +44,9 @@ module ReferenceBook
     end
 
 
-
-
-
-
-    
-
-
-
     def library
       ReferenceBook::Library
     end
 
   end
-
 end
