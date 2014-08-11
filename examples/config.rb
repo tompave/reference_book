@@ -36,10 +36,24 @@ end
 
 # This will raise an error because of the unexpected key
 #
-ReferenceBook.write_book(title: "Italy", library_key: :italy) do |book|
+ReferenceBook.write_book(title: "Italy") do |book|
   book.price = 10
   book.currency = '€'
   book.country_name = 'Italy'
   book.date_format = '%-d/%-m/%Y'
   book.international_prefix = '+39'
+end
+
+
+
+# This will raise an error because 'title' and 'library_key' have
+# a special meaning, and must be defined as method parameters
+
+ReferenceBook.write_book(title: "Spain") do |book|
+  book.price = 10
+  book.currency = ''
+  book.country_name = 'Spain'
+  book.date_format = '%-d/%-m/%Y'
+  book.title = 'Spain'
+  book.library_key = :spain
 end

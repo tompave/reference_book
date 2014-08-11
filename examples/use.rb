@@ -30,7 +30,7 @@ end
 
 
 
-# the books can be retrieved with:
+# The books can be retrieved with:
 
 ReferenceBook.library.index
 # => [:elf, :dwarf, :halfling]
@@ -52,7 +52,7 @@ ReferenceBook::Library[:elf]
 #               library_key = :elf>
 
 
-# and each book can be queried with:
+# And each book can be queried with:
 
 ReferenceBook.library.elf.dexterity
 ReferenceBook.library.elf[:dexterity]
@@ -69,8 +69,6 @@ ReferenceBook.library[:halfling][:wisdom]
 
 
 
-
-
 # You can wrap it with your own logic:
 
 def modifier_for(race, stat)
@@ -81,6 +79,13 @@ end
 
 modifier_for('Dwarf', 'Charisma')
 # => -2
+
+
+
+# Books are read-only:
+
+ReferenceBook.library.dwarf.strength = 10
+# RuntimeError: can't modify frozen ReferenceBook::Book::Dwarf
 
 
 
@@ -122,7 +127,3 @@ book.each_pair { |k, v| puts "#{k}: #{v}" }
 # title: Elf
 # library_key: elf
 
-
-
-ReferenceBook.library.dwarf.strength = 10
-# RuntimeError: can't modify frozen ReferenceBook::Book::Dwarf
