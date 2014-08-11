@@ -55,6 +55,43 @@ class LibraryTest < Minitest::Test
 
 
 
+  def test_store_incremental
+    assert_empty ReferenceBook::Library.index
+    assert_empty ReferenceBook::Library.shelf
+
+    book_1 = make_book(:one)
+    book_2 = make_book(:two)
+
+    ReferenceBook::Library.store book_1
+
+    assert_equal 1, ReferenceBook::Library.index.size
+    assert_includes ReferenceBook::Library.index, :one
+
+    assert_equal 1, ReferenceBook::Library.shelf.size
+    assert_equal book_1, ReferenceBook::Library.shelf[:one]
+
+    assert_respond_to ReferenceBook::Library, :one
+    assert_equal book_1, ReferenceBook::Library.one
+
+
+    ReferenceBook::Library.store book_2
+
+    assert_equal 2, ReferenceBook::Library.index.size
+    assert_includes ReferenceBook::Library.index, :one
+    assert_includes ReferenceBook::Library.index, :two
+
+    assert_equal 2, ReferenceBook::Library.shelf.size
+    assert_equal book_1, ReferenceBook::Library.shelf[:one]
+    assert_equal book_2, ReferenceBook::Library.shelf[:two]
+
+    assert_respond_to ReferenceBook::Library, :one
+    assert_equal book_1, ReferenceBook::Library.one
+    assert_respond_to ReferenceBook::Library, :two
+    assert_equal book_2, ReferenceBook::Library.two
+  end
+
+
+
   def test_empty
     book = make_book(:one)
     ReferenceBook::Library.store(book)
