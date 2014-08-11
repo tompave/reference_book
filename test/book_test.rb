@@ -18,12 +18,14 @@ class BookTest < Minitest::Test
   def test_setters
     assert_respond_to @book, :foo=
     assert_respond_to @book, :bar=
+    refute_respond_to @book, :baz=
   end
 
 
   def test_getters
     assert_respond_to @book, :foo
     assert_respond_to @book, :bar
+    refute_respond_to @book, :baz
   end
 
 
