@@ -84,4 +84,35 @@ class BookTest < Minitest::Test
     assert_equal 22, @book.to_h[:bar]
   end
 
+
+
+  def test_freeze_methods
+    assert_respond_to @book, :freeze
+    assert_respond_to @book, :frozen?
+  end
+
+
+  def test_freeze_effects
+    refute @book.frozen?
+    @book.freeze
+    assert @book.frozen?
+  end
+
+
+  def test_fronzen_book_attributes
+    assert_nil @book.foo
+    @book.foo = 1
+    assert_equal 1, @book.foo
+    @book.freeze
+    assert_equal 1, @book.foo
+
+    assert_raises RuntimeError do
+      @book.foo = 2
+    end
+
+    assert_raises RuntimeError do
+      @book.bar = 3
+    end
+  end
+
 end
