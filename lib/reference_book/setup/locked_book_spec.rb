@@ -1,9 +1,12 @@
 class ReferenceBook::Setup::LockedBookSpec
-  attr_reader :book_keys
+  
 
-
-  def initialize(keys)
-    @book_keys = symbolize_and_sort(keys)
+  def initialize(keys_array)
+    if keys_array.any?
+      @book_keys = symbolize_and_sort(keys_array)
+    else
+      raise ReferenceBook::LockedBookSpecError, "A LockedBookSpec must have at least one key"
+    end
   end
 
 

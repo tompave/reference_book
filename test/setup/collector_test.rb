@@ -53,6 +53,19 @@ class CollectorTest < Minitest::Test
   end
 
 
+  def test_assign_nil
+    assert_nil @collector.foo
+    assert_empty @collector.to_h
+
+    @collector.foo = nil
+
+    assert_nil @collector.foo
+    assert_equal 1, @collector.to_h.size
+    assert_includes @collector.to_h.keys, :foo
+  end
+
+
+
   def test_set_title_direct
     assert_raises ReferenceBook::BookDefinitionError do
       @collector.title = 'anything'
