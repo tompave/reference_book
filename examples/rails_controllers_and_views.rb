@@ -59,8 +59,6 @@ end
 class ApplicationController < ActionController::Base
   include CustomReferenceBookMethods
 
-private
-
   def country_key_for_locale
     # ...
   end
