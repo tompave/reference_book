@@ -85,9 +85,9 @@ module CustomReferenceBookMethods
 
   def ads_list
     if ref_book.with_ads
-      AdsList.new(self)
+      Ads::List.new(self)
     else
-      nil
+      Ads::None.new
     end
   end
 end
