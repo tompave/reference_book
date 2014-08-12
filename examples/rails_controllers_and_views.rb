@@ -1,13 +1,13 @@
 # Given this configuration:
 
 ReferenceBook.write_book(title: 'Italy', library_key: :it) do |book|
-  book.currency = '€'
-  book.time_zone 'Europe/Rome'
+  book.currency  = '€'
+  book.time_zone = 'Europe/Rome'
 end
 
 ReferenceBook.write_book(title: 'UnitedKindom', library_key: :uk) do |book|
-  book.currency = '£'
-  book.time_zone 'Europe/London'
+  book.currency  = '£'
+  book.time_zone = 'Europe/London'
 end
 
 
