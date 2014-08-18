@@ -3,7 +3,7 @@
 A multi-context configuration library and DSL.  
 **ReferenceBook** provides an easy interface to define, validate and query **multi-context** configuration data.
 
-What does **multi-context** mean?
+What does **multi-context** mean?  
 Any setting that should be static and that exist in different alternative versions.
 
 
@@ -36,12 +36,12 @@ Lots are available [in the repo](https://github.com/tompave/reference_book/tree/
 
 ## Rubies
 
-**ReferenceBook** requires a Ruby patch level `>= 2.0`.
+**ReferenceBook** requires a Ruby patch level `>= 2.0`.  
 It doesn't use any _2-only_ syntax features, but it does rely on some core classes' methods that only appeared with MRI 2.0.0.
 
-**MRI**: supported, tested with 2.0 and 2.1.
-**JRuby**: tested with 2.0 mode (`JRUBY_OPTS=--2.0 rake test`).
-**Rubinius**: not supported, even in 2.1 mode its standard library classes seem to espose a 1.9 interface.
+**MRI**: supported, tested with 2.0 and 2.1.  
+**JRuby**: tested in 2.0 mode (`JRUBY_OPTS=--2.0 rake test`).  
+**Rubinius**: not supported, even in 2.1 mode its standard library classes seem to expose a 1.9 interface.  
 
 
 ## Tests
@@ -54,7 +54,7 @@ It doesn't use any _2-only_ syntax features, but it does rely on some core class
 ## To Do
 
 * add support for different libraries, each with an enforced book structure
-* make it work with `Ruby 1.9.3` (involves implementing methods that at the moment are provided by core classes).
+* make it work with Ruby 1.9.3 (involves implementing methods that at the moment are provided by core classes).
 
 
 ## Installation
