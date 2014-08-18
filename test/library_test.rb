@@ -171,13 +171,17 @@ class LibraryTest < Minitest::Test
 
     result = ReferenceBook.library.pluck(:foo)
     assert_instance_of Array, result
-    assert_eql 3, result.size
-    assert_eql [11, 111, 1111].sort, result.sort
+    assert_equal 3, result.size
+    assert_equal [11, 111, 1111], result
+
+    assert_equal result, ReferenceBook.library.array_for(:foo)
 
     result = ReferenceBook.library.pluck(:baz)
     assert_instance_of Array, result
-    assert_eql 3, result.size
-    assert_eql [nil, nil, 333].sort, result.sort
+    assert_equal 3, result.size
+    assert_equal [nil, 333, nil], result
+
+    assert_equal result, ReferenceBook.library.array_for(:baz)
   end
 
 
@@ -203,9 +207,21 @@ class LibraryTest < Minitest::Test
     result = ReferenceBook.library.hash_pluck(:foo)
     assert_instance_of Hash, result
     assert_equal 3, result.size
+    assert_equal 11, result[:aaa]
+    assert_equal 111, result[:bbb]
+    assert_equal 1111, result[:ccc]
+
+    assert_equal result, ReferenceBook.library.hash_for(:foo)
+
+
+    result = ReferenceBook.library.hash_pluck(:baz)
+    assert_instance_of Hash, result
+    assert_equal 3, result.size
     assert_nil result[:aaa]
     assert_equal 333, result[:bbb]
     assert_nil result[:ccc]
+
+    assert_equal result, ReferenceBook.library.hash_for(:baz)
   end
 
 

@@ -42,6 +42,26 @@ module ReferenceBook::Library
 
 
 
+    
+    def array_for(key)
+      shelf.map do |k, book|
+        book[key] if book.respond_to?(key)
+      end
+    end
+    alias_method :pluck, :array_for
+
+
+    def hash_for(key)
+      Hash[
+        shelf.map do |k, book|
+          [k, (book[key] if book.respond_to?(key))]
+        end
+      ]
+    end
+    alias_method :hash_pluck, :hash_for
+
+
+
   private
 
     def define_accessor_for(book)
