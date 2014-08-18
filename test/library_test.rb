@@ -151,6 +151,64 @@ class LibraryTest < Minitest::Test
 
 
 
+
+  def test_pluck
+    ReferenceBook.write_book(title: "TestPluckA") do |b|
+      b.foo = 11
+      b.bar = 22
+    end
+
+    ReferenceBook.write_book(title: "TestPluckB") do |b|
+      b.foo = 111
+      b.bar = 222
+      b.baz = 333
+    end
+
+    ReferenceBook.write_book(title: "TestPluckC") do |b|
+      b.foo = 1111
+      b.bar = 2222
+    end
+
+    result = ReferenceBook.library.pluck(:foo)
+    assert_instance_of Array, result
+    assert_eql 3, result.size
+    assert_eql [11, 111, 1111].sort, result.sort
+
+    result = ReferenceBook.library.pluck(:baz)
+    assert_instance_of Array, result
+    assert_eql 3, result.size
+    assert_eql [nil, nil, 333].sort, result.sort
+  end
+
+
+
+
+  def test_hash_pluck
+    ReferenceBook.write_book(title: "TestHashPluckA", library_key: :aaa) do |b|
+      b.foo = 11
+      b.bar = 22
+    end
+
+    ReferenceBook.write_book(title: "TestHashPluckB", library_key: :bbb) do |b|
+      b.foo = 111
+      b.bar = 222
+      b.baz = 333
+    end
+
+    ReferenceBook.write_book(title: "TestHashPluckC", library_key: :ccc) do |b|
+      b.foo = 1111
+      b.bar = 2222
+    end
+
+    result = ReferenceBook.library.hash_pluck(:foo)
+    assert_instance_of Hash, result
+    assert_equal 3, result.size
+    assert_nil result[:aaa]
+    assert_equal 333, result[:bbb]
+    assert_nil result[:ccc]
+  end
+
+
 private
   
   BOOK_STRUCT = ReferenceBook::Book.new("ExampleLib", :title, :library_key)
