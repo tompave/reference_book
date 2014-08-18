@@ -56,7 +56,7 @@ It doesn't use any _2-only_ syntax features, but it does rely on some core class
 
 * add support for different libraries, each with an enforced book structure
 * make it work with Ruby 1.9.3 (involves implementing methods that at the moment are provided by core classes).
-* implement `pluck` and `hash_pluck`
+* memoize results of `pluck` and `hash_pluck`
 * implement `library_key` aliases, so that books can be retrieved with strings. Library keys have to be symbols, because they are used to define the accessor methods
 
 
