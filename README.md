@@ -34,6 +34,7 @@ Lots are available [in the repo](https://github.com/tompave/reference_book/tree/
 
 
 
+
 ## Rubies
 
 **ReferenceBook** requires a Ruby patch level `>= 2.0`.  
@@ -55,6 +56,8 @@ It doesn't use any _2-only_ syntax features, but it does rely on some core class
 
 * add support for different libraries, each with an enforced book structure
 * make it work with Ruby 1.9.3 (involves implementing methods that at the moment are provided by core classes).
+* implement `pluck` and `hash_pluck`
+* implement `library_key` aliases, so that books can be retrieved with strings. Library keys have to be symbols, because they are used to define the accessor methods
 
 
 ## Installation
