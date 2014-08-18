@@ -1,6 +1,6 @@
 # ReferenceBook
 
-A multi-configuration library and DSL.  
+A multi-context configuration library and DSL.  
 **ReferenceBook** provides an easy interface to define, validate and query **multi-context** configuration data.
 
 What does **multi-context** mean?

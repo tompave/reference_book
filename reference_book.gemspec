@@ -2,14 +2,13 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'reference_book/version'
-require 'reference_book'
 
 Gem::Specification.new do |spec|
   spec.name          = "reference_book"
   spec.version       = ReferenceBook::VERSION
   spec.author        = "Tommaso Pavese"
-  spec.summary       = "%q{TODO: Write a short summary. Required.}"
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = "A multi-context configuration library and DSL."
+  spec.description   = "A multi-context configuration library and DSL. ReferenceBook provides an easy interface to define, validate and query multi-context configuration data."
   spec.homepage      = "https://github.com/tompave/reference_book"
   spec.license       = "MIT"
 
