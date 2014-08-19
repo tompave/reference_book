@@ -42,6 +42,20 @@ module ReferenceBook::Library
 
 
 
+    def book_keys
+      return @book_keys if @book_keys
+      
+      if index.any?
+        @book_keys = shelf[index[0]].members
+        @book_keys.delete(:title)
+        @book_keys.delete(:library_key)
+        @book_keys
+      else
+        []
+      end
+    end
+
+
 
     def array_for(attribute)
       shelf.map do |key, book|
@@ -60,6 +74,16 @@ module ReferenceBook::Library
     end
     alias_method :hash_pluck, :hash_for
 
+
+
+
+    def rotate
+      Hash[
+        book_keys.map do |book_k|
+          [book_k, hash_for(book_k)]
+        end
+      ]
+    end
 
 
   private
