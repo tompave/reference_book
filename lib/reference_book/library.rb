@@ -46,7 +46,7 @@ module ReferenceBook::Library
       return @book_keys if @book_keys
       
       if index.any?
-        @book_keys = shelf[index[0]].members
+        @book_keys = shelf.map { |k, book| book.members }.flatten.uniq
         @book_keys.delete(:title)
         @book_keys.delete(:library_key)
         @book_keys
