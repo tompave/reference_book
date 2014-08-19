@@ -153,21 +153,7 @@ class LibraryTest < Minitest::Test
 
 
   def test_pluck
-    ReferenceBook.write_book(title: "TestPluckA") do |b|
-      b.foo = 11
-      b.bar = 22
-    end
-
-    ReferenceBook.write_book(title: "TestPluckB") do |b|
-      b.foo = 111
-      b.bar = 222
-      b.baz = 333
-    end
-
-    ReferenceBook.write_book(title: "TestPluckC") do |b|
-      b.foo = 1111
-      b.bar = 2222
-    end
+    end_to_end_setup("TestPluck")
 
     result = ReferenceBook.library.pluck(:foo)
     assert_instance_of Array, result
@@ -188,21 +174,7 @@ class LibraryTest < Minitest::Test
 
 
   def test_hash_pluck
-    ReferenceBook.write_book(title: "TestHashPluckA", library_key: :aaa) do |b|
-      b.foo = 11
-      b.bar = 22
-    end
-
-    ReferenceBook.write_book(title: "TestHashPluckB", library_key: :bbb) do |b|
-      b.foo = 111
-      b.bar = 222
-      b.baz = 333
-    end
-
-    ReferenceBook.write_book(title: "TestHashPluckC", library_key: :ccc) do |b|
-      b.foo = 1111
-      b.bar = 2222
-    end
+    end_to_end_setup("TestHashPluck")
 
     result = ReferenceBook.library.hash_pluck(:foo)
     assert_instance_of Hash, result
@@ -212,7 +184,6 @@ class LibraryTest < Minitest::Test
     assert_equal 1111, result[:ccc]
 
     assert_equal result, ReferenceBook.library.hash_for(:foo)
-
 
     result = ReferenceBook.library.hash_pluck(:baz)
     assert_instance_of Hash, result
@@ -225,6 +196,37 @@ class LibraryTest < Minitest::Test
   end
 
 
+
+  def test_to_h
+    end_to_end_setup("TestToH")
+
+    result = ReferenceBook.library.to_h
+
+    assert_instance_of Hash, result
+    assert_equal 3, result.size
+
+    assert_equal({foo: 11, bar: 22, baz: nil},     result[:aaa])
+    assert_equal({foo: 111, bar: 222, baz: 333},   result[:bbb])
+    assert_equal({foo: 1111, bar: 2222, baz: nil}, result[:ccc])
+  end
+
+
+
+  def test_rotate
+    end_to_end_setup("TestRotate")
+
+    result = ReferenceBook.library.rotate
+
+    assert_instance_of Hash, result
+    assert_equal 3, result.size
+
+    assert_equal({aaa: 11, bbb: 111, ccc: 1111}, result[:foo])
+    assert_equal({aaa: 22, bbb: 222, ccc: 2222}, result[:bar])
+    assert_equal({aaa: nil, bbb: 333, ccc: nil}, result[:baz])
+  end
+
+
+
 private
   
   BOOK_STRUCT = ReferenceBook::Book.new("ExampleLib", :title, :library_key)
@@ -234,6 +236,26 @@ private
     book.title = "#{key}_title"
     book.library_key = key
     book
+  end
+
+
+
+  def end_to_end_setup(base_name)
+    ReferenceBook.write_book(title: "#{base_name}A", library_key: :aaa) do |b|
+      b.foo = 11
+      b.bar = 22
+    end
+
+    ReferenceBook.write_book(title: "#{base_name}B", library_key: :bbb) do |b|
+      b.foo = 111
+      b.bar = 222
+      b.baz = 333
+    end
+
+    ReferenceBook.write_book(title: "#{base_name}C", library_key: :ccc) do |b|
+      b.foo = 1111
+      b.bar = 2222
+    end
   end
 
 
