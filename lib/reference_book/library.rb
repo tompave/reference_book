@@ -82,20 +82,18 @@ module ReferenceBook::Library
 
       shelf.each do |key, book|
         book_h = book.to_h
-      
+        
+        unless with_meta
+          book_h.delete(:title)
+          book_h.delete(:library_key)
+        end
+
         missing = book_keys - book_h.keys
         missing.each do |k|
           book_h[k] = nil
         end
 
         hash[key] = book_h
-      end
-
-      unless with_meta
-        hash.each do |key, book_h|
-          book_h.delete(:title)
-          book_h.delete(:library_key)
-        end
       end
 
       hash
