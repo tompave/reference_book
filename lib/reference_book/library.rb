@@ -42,19 +42,19 @@ module ReferenceBook::Library
 
 
 
-    
-    def array_for(key)
-      shelf.map do |k, book|
-        book[key] if book.respond_to?(key)
+
+    def array_for(attribute)
+      shelf.map do |key, book|
+        book[attribute] if book.respond_to?(attribute)
       end
     end
     alias_method :pluck, :array_for
 
 
-    def hash_for(key)
+    def hash_for(attribute)
       Hash[
-        shelf.map do |k, book|
-          [k, (book[key] if book.respond_to?(key))]
+        shelf.map do |key, book|
+          [key, (book[attribute] if book.respond_to?(attribute))]
         end
       ]
     end
