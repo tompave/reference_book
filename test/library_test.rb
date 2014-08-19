@@ -197,8 +197,8 @@ class LibraryTest < Minitest::Test
 
 
 
-  def test_to_h
-    end_to_end_setup("TestToH")
+  def test_to_h_no_meta
+    end_to_end_setup("TestTohNoMeta")
 
     result = ReferenceBook.library.to_h
 
@@ -211,9 +211,23 @@ class LibraryTest < Minitest::Test
   end
 
 
+  def test_to_h_with_meta
+    end_to_end_setup("TestToH")
 
-  def test_rotate
-    end_to_end_setup("TestRotate")
+    result = ReferenceBook.library.to_h(true)
+
+    assert_instance_of Hash, result
+    assert_equal 3, result.size
+
+    assert_equal({foo: 11, bar: 22, baz: nil, title: "TestToHA", library_key: :aaa},     result[:aaa])
+    assert_equal({foo: 111, bar: 222, baz: 333, title: "TestToHB", library_key: :bbb},   result[:bbb])
+    assert_equal({foo: 1111, bar: 2222, baz: nil, title: "TestToHC", library_key: :ccc}, result[:ccc])
+  end
+
+
+
+  def test_rotate_no_meta
+    end_to_end_setup("TestRotateNoMeta")
 
     result = ReferenceBook.library.rotate
 
@@ -223,6 +237,23 @@ class LibraryTest < Minitest::Test
     assert_equal({aaa: 11, bbb: 111, ccc: 1111}, result[:foo])
     assert_equal({aaa: 22, bbb: 222, ccc: 2222}, result[:bar])
     assert_equal({aaa: nil, bbb: 333, ccc: nil}, result[:baz])
+  end
+
+
+  def test_rotate_with_meta
+    end_to_end_setup("TestRotate")
+
+    result = ReferenceBook.library.rotate(true)
+
+    assert_instance_of Hash, result
+    assert_equal 5, result.size
+
+    assert_equal({aaa: 11, bbb: 111, ccc: 1111}, result[:foo])
+    assert_equal({aaa: 22, bbb: 222, ccc: 2222}, result[:bar])
+    assert_equal({aaa: nil, bbb: 333, ccc: nil}, result[:baz])
+
+    assert_equal({aaa: "TestRotateA", bbb: "TestRotateB", ccc: "TestRotateC"}, result[:title])
+    assert_equal({aaa: :aaa, bbb: :bbb, ccc: :ccc}, result[:library_key])
   end
 
 
