@@ -59,7 +59,7 @@ module ReferenceBook::Library
 
     def array_for(attribute)
       shelf.map do |key, book|
-        book[attribute] if book.respond_to?(attribute)
+        book.fetch(attribute, nil)
       end
     end
     alias_method :pluck, :array_for
@@ -68,7 +68,7 @@ module ReferenceBook::Library
     def hash_for(attribute)
       Hash[
         shelf.map do |key, book|
-          [key, (book[attribute] if book.respond_to?(attribute))]
+          [key, book.fetch(attribute, nil)]
         end
       ]
     end
