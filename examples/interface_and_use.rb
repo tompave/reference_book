@@ -80,6 +80,59 @@ ReferenceBook.library.hash_for :constitution
 
 
 
+# and complete serializations to Ruby
+ReferenceBook.library.to_h
+# => { :elf => { :strength => 0,
+#                :dexterity => 2,
+#                :constitution => -2,
+#                :intelligence => 0,
+#                :wisdom => 0,
+#                :charisma => 0 },
+#      :dwarf => { :strength => 0,
+#                  :dexterity => 0,
+#                  :constitution => 2,
+#                  :intelligence => 0,
+#                  :wisdom => 0,
+#                  :charisma => -2 },
+#      :halfling => { :strength => -2,
+#                     :dexterity => 2,
+#                     :constitution => 0,
+#                     :intelligence => 0,
+#                     :wisdom => 0,
+#                     :charisma => 0 }
+#     }
+
+# You can pass 'true' to include 'title' and 'library_key' to the serialized results
+ReferenceBook.library.to_h(true)
+# => { :elf => { # ...like the one above, plus:
+#                :title => "Elf",
+#                :library_key => :elf },
+#      :dwarf => { # ...like the one above, plus:
+#                  :title => "Dwarf",
+#                  :library_key => :dwarf },
+#      :halfling => { # ...like the one above, plus:
+#                     :title => "Halfling",
+#                     :library_key => :halfling }
+#    }
+
+
+ReferenceBook.library.rotate
+# => { :strength => {:elf => 0, :dwarf => 0, :halfling => -2},
+#      :dexterity => {:elf => 2, :dwarf => 0, :halfling => 2},
+#      :constitution => {:elf => -2, :dwarf => 2, :halfling => 0},
+#      :intelligence => {:elf => 0, :dwarf => 0, :halfling => 0},
+#      :wisdom => {:elf => 0, :dwarf => 0, :halfling => 0},
+#      :charisma => {:elf => 0, :dwarf => -2, :halfling => 0}}
+
+
+# You can pass 'true' to include 'title' and 'library_key' to the serialized results
+ReferenceBook.library.rotate(true)
+# => { # ...like the one above, plus:
+#      :title => {:elf => "Elf", :dwarf => "Dwarf", :halfling => "Halfling"},
+#      :library_key => {:elf => :elf, :dwarf => :dwarf, :halfling => :halfling}}
+
+
+
 
 # You can wrap it with your own logic:
 
