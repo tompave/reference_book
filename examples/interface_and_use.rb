@@ -58,13 +58,25 @@ ReferenceBook.library.elf.dexterity
 ReferenceBook.library.elf[:dexterity]
 # => 2
 
-ReferenceBook.library.dwarf.dexterity
-ReferenceBook.library.dwarf[:dexterity]
-# => 0
+ReferenceBook.library.dwarf.charisma
+ReferenceBook.library.dwarf[:charisma]
+# => -2
 
 ReferenceBook.library[:halfling].widsom
 ReferenceBook.library[:halfling][:wisdom]
 # => 0
+
+
+# The Library supports horizontal queries
+
+ReferenceBook.library.pluck :constitution
+ReferenceBook.library.array_for :constitution
+# => [-2, 2, 0]
+
+
+ReferenceBook.library.hash_pluck :constitution
+ReferenceBook.library.hash_for :constitution
+# => {:elf => -2, :dwarf => 2, :halfling => 0}
 
 
 
