@@ -41,15 +41,21 @@ end
 module CustomReferenceBookMethods
   extend ActiveSupport::Concern
 
-  included do |base|
-    raise 'ops' unless base.instance_methods.include?(:country_key_for_locale)
+  included do
     helper_method :ref_book
   end
 
 private
   
   def ref_book
-    @ref_book ||= ReferenceBook.library[country_key_for_locale]
+    @ref_book ||= ReferenceBook.library[__safe_country_key_or_nil]
+  end
+
+
+  def __safe_country_key_or_nil
+    if self.respond_to?(:country_key_for_locale, true)
+      country_key_for_locale
+    end
   end
 end
 
@@ -58,6 +64,8 @@ end
 
 class ApplicationController < ActionController::Base
   include CustomReferenceBookMethods
+
+private
 
   def country_key_for_locale
     # ...
