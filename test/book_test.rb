@@ -118,4 +118,24 @@ class BookTest < Minitest::Test
     end
   end
 
+
+
+  def test_fetch_existing_key
+    @book.foo = 1
+
+    assert_equal 1, @book.fetch(:foo)
+    assert_equal 1, @book.fetch(:foo, 'fallback')
+  end
+
+
+  def test_fetch_non_existing_key
+    @book.foo = 1
+
+    assert_raises KeyError do
+      @book.fetch(:not_present)
+    end
+
+    assert_equal 'fallback', @book.fetch(:not_present, 'fallback')
+  end
+
 end
