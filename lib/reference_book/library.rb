@@ -76,13 +76,29 @@ module ReferenceBook::Library
 
 
 
+    def to_h(with_meta = false)
+      hash = {}
 
-    def rotate
-      Hash[
+      if with_meta
+      end
+
+      hash
+    end
+
+
+    def rotate(with_meta = false)
+      hash = Hash[
         book_keys.map do |book_k|
           [book_k, hash_for(book_k)]
         end
       ]
+
+      if with_meta
+        hash[:title] = hash_for(:title)
+        hash[:library_key] = hash_for(:library_key)
+      end
+
+      hash
     end
 
 
