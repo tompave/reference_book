@@ -2,7 +2,7 @@ require 'test_helper'
 
 class BookTest < Minitest::Test
 
-  BOOK_STRUCT = ReferenceBook::Book.new("Example", :foo, :bar)
+  BOOK_STRUCT = ReferenceBook::Book.new("Example", :foo, :bar, :title, :library_key)
 
   def setup
     super
@@ -56,7 +56,7 @@ class BookTest < Minitest::Test
 
 
   def test_creation
-    template = ReferenceBook::Book.new("Foobar", :foo, :bar)
+    template = ReferenceBook::Book.new("Foobar", :foo, :bar, :title, :library_key)
     assert_equal Class, template.class
     assert_equal "ReferenceBook::Book::Foobar", template.name
 
@@ -72,9 +72,12 @@ class BookTest < Minitest::Test
 
   def test_to_h
     assert_equal Hash, @book.to_h.class
-    assert_equal 2, @book.to_h.size
+    assert_equal 4, @book.to_h.size
     assert_includes @book.to_h.keys, :foo
     assert_includes @book.to_h.keys, :bar
+    assert_includes @book.to_h.keys, :title
+    assert_includes @book.to_h.keys, :library_key
+    
     assert_nil @book.to_h[:foo]
     assert_nil @book.to_h[:bar]
 
