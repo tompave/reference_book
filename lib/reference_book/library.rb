@@ -76,14 +76,32 @@ module ReferenceBook::Library
 
 
 
+
     def to_h(with_meta = false)
       hash = {}
 
-      if with_meta
+      shelf.each do |key, book|
+        book_h = book.to_h
+      
+        missing = book_keys - book_h.keys
+        missing.each do |k|
+          book_h[k] = nil
+        end
+
+        hash[key] = book_h
+      end
+
+      unless with_meta
+        hash.each do |key, book_h|
+          book_h.delete(:title)
+          book_h.delete(:library_key)
+        end
       end
 
       hash
     end
+
+
 
 
     def rotate(with_meta = false)
