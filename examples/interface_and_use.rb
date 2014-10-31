@@ -66,6 +66,16 @@ ReferenceBook.library[:halfling].widsom
 ReferenceBook.library[:halfling][:wisdom]
 # => 0
 
+# Books implement fetching with defaults:
+
+ReferenceBook.library.halfling.fetch :strength
+# => -2
+ReferenceBook.library.halfling.fetch :strength, 100
+# => -2
+ReferenceBook.library.halfling.fetch :luck, 100
+# => 100
+
+
 
 # The Library supports horizontal queries
 
@@ -137,9 +147,9 @@ ReferenceBook.library.rotate(true)
 # You can wrap it with your own logic:
 
 def modifier_for(race, stat)
-  race = race.downcase.to_sym
-  stat = stat.downcase.to_sym
-  ReferenceBook.library[race][stat]
+  race_key = race.downcase.to_sym
+  stat_key = stat.downcase.to_sym
+  ReferenceBook.library[race_key][stat_key]
 end
 
 modifier_for('Dwarf', 'Charisma')
